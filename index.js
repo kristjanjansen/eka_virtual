@@ -20,9 +20,12 @@ const App = {
 
     const publisherWithChannel = computed(() => {
       if (openvidu.publisher.value) {
-        const { connection } = openvidu.publisher.value.stream;
-        if (connection.data) {
-          openvidu.publisher.value.user = JSON.parse(connection.data);
+        const userId = JSON.parse(
+          openvidu.publisher.value.stream.connection.data
+        ).userId;
+        const user = users.value.find((user) => user.userId === userId);
+        if (user) {
+          openvidu.publisher.value.user = user;
         }
       }
       return openvidu.publisher.value;
@@ -89,7 +92,7 @@ const App = {
     <div>{{ publisherWithChannel ? publisherWithChannel.user : '' }}</div>
   </Draggable>
   
-  <div v-for="(publisher, i) in subscribers">
+  <div v-for="(publisher, i) in subscribers" style="transform: scale(0.5); transform-origin: 0 0;">
     <OpenviduVideo :publisher="publisher" />
   </div>
 
