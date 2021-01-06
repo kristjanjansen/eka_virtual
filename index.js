@@ -18,8 +18,9 @@ const App = {
     const publisherWithChannel = computed(() => {
       if (openvidu.publisher.value) {
         const { connection } = openvidu.publisher.value.stream;
-        const userName = JSON.parse(connection.data).userName._value;
-        openvidu.publisher.value.userName = userName;
+        if (connection.data) {
+          openvidu.publisher.value.data = JSON.parse(connection.data);
+        }
       }
       return openvidu.publisher.value;
     });
@@ -54,7 +55,7 @@ const App = {
   <button @click="leaveSession">Leave</button>
   
   <p><OpenviduVideo :publisher="publisherWithChannel" /></p>
-  <p>{{ publisherWithChannel ? publisherWithChannel.userName : '' }}</p>
+  <p>{{ publisherWithChannel ? publisherWithChannel.data : '' }}</p>
   
   <p>
     <OpenviduVideo
