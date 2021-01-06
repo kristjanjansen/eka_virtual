@@ -65,6 +65,47 @@ const App = {
     };
   },
   template: `
+
+  <h2>WebRTC</h2>
+  
+  <button @click="joinSession">Join</button>
+  <button @click="leaveSession">Leave</button>
+  
+    
+  <div
+    v-for="(subscriber, i) in subscribersUsers"
+    style="transform: scale(0.5); transform-origin: 0 0; position: absolute; filter: blur(0); mix-blend-mode: multiply"
+    :style="{left: subscriber.user.userX + 'px', top: subscriber.user.userY + 'px'}"
+  >
+    <OpenviduVideo :publisher="subscriber" />
+    <!-- <div>{{ subscriber ? subscriber.user : '' }}</div> -->
+  </div>
+
+
+  <Draggable @drag="onDrag" style="transform: scale(0.5); transform-origin: 0 0; filter: blur(0); mix-blend-mode: multiply">
+    <OpenviduVideo :publisher="publisherUser" />
+    <!-- <div>{{ publisherUser ? publisherUser.user : '' }}</div> -->
+  </Draggable>
+
+  <pre>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </pre>
+
   <h2>Chat</h2>
 
   Your username: {{ userName }}
@@ -81,30 +122,6 @@ const App = {
   
   <pre ref="scrollEl">{{ messages }}</pre>
 
-  <h2>WebRTC</h2>
-  
-  <button @click="joinSession">Join</button>
-  <button @click="leaveSession">Leave</button>
-  
-    
-  <div
-    v-for="(subscriber, i) in subscribersUsers"
-    style="transform: scale(0.5); transform-origin: 0 0; position: absolute;"
-    :style="{left: subscriber.user.userX + 'px', top: subscriber.user.userY + 'px'}"
-  >
-    <OpenviduVideo :publisher="subscriber" />
-    <div>{{ subscriber ? subscriber.user : '' }}</div>
-  </div>
-
-
-  <Draggable @drag="onDrag" style="transform: scale(0.5); transform-origin: 0 0;">
-    <OpenviduVideo :publisher="publisherUser" />
-    <div>{{ publisherUser ? publisherUser.user : '' }}</div>
-  </Draggable>
-
-  <pre>
-    {{ users }}
-  </pre>
   `,
 };
 
