@@ -87,7 +87,11 @@ const App = {
   <button @click="leaveSession">Leave</button>
   
     
-  <div v-for="(subscriber, i) in subscribersUsers" style="transform: scale(0.5); transform-origin: 0 0;">
+  <div
+    v-for="(subscriber, i) in subscribersUsers"
+    style="transform: scale(0.5); transform-origin: 0 0; position: absolute;"
+    :style="{left: subscriber.user.userX + 'px', top: subscriber.user.userY + 'px'}"
+  >
     <OpenviduVideo :publisher="subscriber" />
     <div>{{ subscriber ? subscriber.user : '' }}</div>
   </div>
