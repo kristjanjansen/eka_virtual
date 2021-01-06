@@ -54,16 +54,14 @@ const App = {
   <button @click="joinSession">Join</button>
   <button @click="leaveSession">Leave</button>
   
-  <p><OpenviduVideo :publisher="publisherWithChannel" /></p>
-  <p>{{ publisherWithChannel ? publisherWithChannel.data : '' }}</p>
+  <div>
+    <OpenviduVideo :publisher="publisherWithChannel" />
+    <div>{{ publisherWithChannel ? publisherWithChannel.data : '' }}</div>
+  </div>
   
-  <p>
-    <OpenviduVideo
-      v-for="(publisher, i) in subscribers"
-      :key="i"
-      :publisher="publisher"
-    />
-  </p>
+  <div v-for="(publisher, i) in subscribers">
+    <OpenviduVideo :publisher="publisher" />
+  </div>
 
   <pre>
     {{ users }}
