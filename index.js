@@ -75,7 +75,7 @@ const App = {
   <div
     v-for="(subscriber, i) in subscribersUsers"
     style="transform: scale(0.5); transform-origin: 0 0; position: absolute; filter: blur(0); mix-blend-mode: multiply"
-    :style="{left: subscriber.user.userX + 'px', top: subscriber.user.userY + 'px'}"
+    :style="{left: (subscriber.user ? subscriber.user.userX : '') + 'px', top: (subscriber.user ? subscriber.user.userY : '') + 'px'}"
   >
     <OpenviduVideo :publisher="subscriber" />
     <!-- <div>{{ subscriber ? subscriber.user : '' }}</div> -->
