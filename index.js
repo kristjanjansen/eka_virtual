@@ -5,14 +5,15 @@ import {
   useUser,
   useOpenvidu,
   OpenviduVideo,
+  createMessage,
 } from "./src/deps/live.js";
 
-import { useChannel } from "./src/deps/hackaton.js";
+import { useChannel, Draggable, socket } from "./src/deps/hackaton.js";
 
 import { channel } from "./config.js";
 
 const App = {
-  components: { OpenviduVideo },
+  components: { OpenviduVideo, Draggable },
   setup() {
     const openvidu = useOpenvidu(channel);
     const publisherWithChannel = computed(() => {
@@ -24,12 +25,27 @@ const App = {
       }
       return openvidu.publisher.value;
     });
+
+    const onDrag = ({ x, y }) => {
+      const outgoingMessage = createMessage({
+        type: "CHANNEL_USER_UPDATE",
+        channel,
+        value: {
+          userX: x,
+          userY: y,
+        },
+      });
+      //console.log(outgoingMessage);
+      socket.send(outgoingMessage);
+    };
+
     return {
       ...useChat(channel),
       ...useUser(),
       ...openvidu,
       publisherWithChannel,
       ...useChannel(channel),
+      onDrag,
     };
   },
   template: `
@@ -54,10 +70,10 @@ const App = {
   <button @click="joinSession">Join</button>
   <button @click="leaveSession">Leave</button>
   
-  <div>
+  <Draggable @drag="onDrag">
     <OpenviduVideo :publisher="publisherWithChannel" />
     <div>{{ publisherWithChannel ? publisherWithChannel.data : '' }}</div>
-  </div>
+  </Draggable>
   
   <div v-for="(publisher, i) in subscribers">
     <OpenviduVideo :publisher="publisher" />
