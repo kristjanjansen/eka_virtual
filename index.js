@@ -15,12 +15,14 @@ import { channel } from "./config.js";
 const App = {
   components: { OpenviduVideo, Draggable },
   setup() {
+    const { users } = useChannel(channel);
     const openvidu = useOpenvidu(channel);
+
     const publisherWithChannel = computed(() => {
       if (openvidu.publisher.value) {
         const { connection } = openvidu.publisher.value.stream;
         if (connection.data) {
-          openvidu.publisher.value.data = JSON.parse(connection.data);
+          openvidu.publisher.value.user = JSON.parse(connection.data);
         }
       }
       return openvidu.publisher.value;
@@ -35,16 +37,28 @@ const App = {
           userY: y,
         },
       });
-      //console.log(outgoingMessage);
       socket.send(outgoingMessage);
     };
 
+    /*
+    const usersWithVideos = computed(() =>
+    allUsers.value.map((user) => {
+      const imageUser = images2.value.find(
+        ({ userId }) => userId === user.userId
+      );
+      if (imageUser) {
+        user.image = imageUser.value;
+      }
+      return user;
+    })
+  );
+    */
     return {
       ...useChat(channel),
       ...useUser(),
       ...openvidu,
       publisherWithChannel,
-      ...useChannel(channel),
+      users,
       onDrag,
     };
   },
@@ -70,9 +84,9 @@ const App = {
   <button @click="joinSession">Join</button>
   <button @click="leaveSession">Leave</button>
   
-  <Draggable @drag="onDrag">
+  <Draggable @drag="onDrag" style="transform: scale(0.5); transform-origin: 0 0;">
     <OpenviduVideo :publisher="publisherWithChannel" />
-    <div>{{ publisherWithChannel ? publisherWithChannel.data : '' }}</div>
+    <div>{{ publisherWithChannel ? publisherWithChannel.user : '' }}</div>
   </Draggable>
   
   <div v-for="(publisher, i) in subscribers">
