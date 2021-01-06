@@ -1,4 +1,4 @@
-import { createApp } from "./src/deps/vue.js";
+import { createApp, computed } from "./src/deps/vue.js";
 
 import {
   useChat,
@@ -7,15 +7,23 @@ import {
   OpenviduVideo,
 } from "./src/deps/live.js";
 
+import { useChannel } from "./src/deps/hackaton.js";
+
 import { channel } from "./config.js";
 
 const App = {
   components: { OpenviduVideo },
   setup() {
+    const openvidu = useOpenvidu(channel);
+    const publisherWithChannel = computed(() => {
+      return openvidu.publisher.value;
+    });
     return {
       ...useChat(channel),
       ...useUser(),
-      ...useOpenvidu(channel),
+      ...openvidu,
+      publisherWithChannel,
+      ...useChannel(channel),
     };
   },
   template: `
@@ -40,7 +48,7 @@ const App = {
   <button @click="joinSession">Join</button>
   <button @click="leaveSession">Leave</button>
   
-  <p><OpenviduVideo :publisher="publisher" /></p>
+  <p><OpenviduVideo :publisher="publisherWithChannel" /></p>
   
   <p>
     <OpenviduVideo
@@ -49,7 +57,10 @@ const App = {
       :publisher="publisher"
     />
   </p>
-  </div>
+
+  <pre>
+    {{ users }}
+  </pre>
   `,
 };
 
