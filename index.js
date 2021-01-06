@@ -18,7 +18,7 @@ const App = {
     const { users } = useChannel(channel);
     const openvidu = useOpenvidu(channel);
 
-    const publisherWithChannel = computed(() => {
+    const publisherUser = computed(() => {
       if (openvidu.publisher.value) {
         const userId = JSON.parse(
           openvidu.publisher.value.stream.connection.data
@@ -29,6 +29,17 @@ const App = {
         }
       }
       return openvidu.publisher.value;
+    });
+
+    const subscribersUsers = computed(() => {
+      return openvidu.subscribers.value.map((subscriber) => {
+        const userId = JSON.parse(subscriber.stream.connection.data).userId;
+        const user = users.value.find((user) => user.userId === userId);
+        if (user) {
+          subscriber.user = user;
+        }
+        return subscriber;
+      });
     });
 
     const onDrag = ({ x, y }) => {
@@ -43,24 +54,12 @@ const App = {
       socket.send(outgoingMessage);
     };
 
-    /*
-    const usersWithVideos = computed(() =>
-    allUsers.value.map((user) => {
-      const imageUser = images2.value.find(
-        ({ userId }) => userId === user.userId
-      );
-      if (imageUser) {
-        user.image = imageUser.value;
-      }
-      return user;
-    })
-  );
-    */
     return {
       ...useChat(channel),
       ...useUser(),
       ...openvidu,
-      publisherWithChannel,
+      publisherUser,
+      subscribersUsers,
       users,
       onDrag,
     };
@@ -87,14 +86,17 @@ const App = {
   <button @click="joinSession">Join</button>
   <button @click="leaveSession">Leave</button>
   
-  <Draggable @drag="onDrag" style="transform: scale(0.5); transform-origin: 0 0;">
-    <OpenviduVideo :publisher="publisherWithChannel" />
-    <div>{{ publisherWithChannel ? publisherWithChannel.user : '' }}</div>
-  </Draggable>
-  
-  <div v-for="(publisher, i) in subscribers" style="transform: scale(0.5); transform-origin: 0 0;">
-    <OpenviduVideo :publisher="publisher" />
+    
+  <div v-for="(subscriber, i) in subscribersUsers" style="transform: scale(0.5); transform-origin: 0 0;">
+    <OpenviduVideo :publisher="subscriber" />
+    <div>{{ subscriber ? subscriber.user : '' }}</div>
   </div>
+
+
+  <Draggable @drag="onDrag" style="transform: scale(0.5); transform-origin: 0 0;">
+    <OpenviduVideo :publisher="publisherUser" />
+    <div>{{ publisherUser ? publisherUser.user : '' }}</div>
+  </Draggable>
 
   <pre>
     {{ users }}
