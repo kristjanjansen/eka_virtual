@@ -1,7 +1,6 @@
-import { createApp, computed } from "./src/deps/vue.js";
+import { createApp, computed, ref } from "./src/deps/vue.js";
 
 import {
-  useChat,
   useUser,
   useOpenvidu,
   OpenviduVideo,
@@ -42,7 +41,7 @@ const App = {
       });
     });
 
-    const onDrag = ({ x, y }) => {
+    const onUserDrag = ({ x, y }) => {
       const outgoingMessage = createMessage({
         type: "CHANNEL_USER_UPDATE",
         channel,
@@ -55,23 +54,19 @@ const App = {
     };
 
     return {
-      ...useChat(channel),
       ...useUser(),
       ...openvidu,
       publisherUser,
       subscribersUsers,
-      users,
-      onDrag,
+      onUserDrag,
     };
   },
   template: `
-
-  <h2>WebRTC</h2>
+  <div class="buttons">
+    <button v-if="!sessionStarted" @click="joinSession">Join</button>
+    <button v-if="sessionStarted" @click="leaveSession">Leave</button>
+  </div>
   
-  <button @click="joinSession">Join</button>
-  <button @click="leaveSession">Leave</button>
-  
-    
   <div
     v-for="(subscriber, i) in subscribersUsers"
     style="transform: scale(0.5); transform-origin: 0 0; position: absolute; filter: blur(0); mix-blend-mode: multiply"
@@ -82,46 +77,10 @@ const App = {
   </div>
 
 
-  <Draggable @drag="onDrag" style="transform: scale(0.5); transform-origin: 0 0; filter: blur(0); mix-blend-mode: multiply">
+  <Draggable @drag="onUserDrag" style="transform: scale(0.5); transform-origin: 0 0; filter: blur(0); mix-blend-mode: multiply">
     <OpenviduVideo :publisher="publisherUser" />
     <!-- <div>{{ publisherUser ? publisherUser.user : '' }}</div> -->
   </Draggable>
-
-  <pre>
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </pre>
-
-  <h2>Chat</h2>
-
-  Your username: {{ userName }}
-  
-  <button @click="onUserNameChange">Change</button>
-  
-  <br />
-
-  <textarea v-model="newMessage" ref="textareaEl"></textarea>
-  
-  <br />
-  
-  <button @click="onNewMessage">Send message</button>
-  
-  <pre ref="scrollEl">{{ messages }}</pre>
-
   `,
 };
 
