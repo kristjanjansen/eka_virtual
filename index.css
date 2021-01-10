@@ -5,9 +5,6 @@ body {
   margin: 0;
   padding: 24px;
   font-family: sans-serif;
-}
-
-button {
-}
-.toolbar {
+  background: black;
+  color: white;
 }

@@ -1,17 +1,66 @@
-import { createApp, computed, ref } from "./src/deps/vue.js";
+import { createApp, computed, ref, watch } from "./src/deps/vue.js";
 
 import {
   useUser,
   useOpenvidu,
   OpenviduVideo,
   createMessage,
+  debounce,
 } from "./src/deps/live.js";
 
 import { useChannel, Draggable, socket } from "./src/deps/hackaton.js";
 
 import { channel } from "./config.js";
 
+console.log(debounce);
+
 const App = {
+  template: `
+  <div class="buttons">
+    <button v-if="!sessionStarted" @click="joinSession">Join</button>
+    <button v-if="sessionStarted" @click="leaveSession">Leave</button>
+    <input
+      v-if="sessionStarted"
+      type="range"
+      v-model="scale"
+      min="0.1"
+      max="0.8"
+      step="0.01"
+    />
+  </div>
+
+  <div
+    v-for="(subscriber, i) in subscribersUsers"
+    style="
+      transform-origin: 0 0;
+      position: absolute;
+      filter: blur(0);
+      mix-blend-mode: normal;
+    "
+    :style="{
+      transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
+      transition: 'all 100ms linear',
+      left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
+      top: (subscriber.user ? subscriber.user.userY : '') + 'px'
+    }"
+  >
+    <OpenviduVideo :publisher="subscriber" />
+  </div>
+
+  <Draggable
+    @drag="onUserDrag"
+    style="
+      transform-origin: 0 0;
+      filter: blur(0);
+      mix-blend-mode: normal;
+    "
+    :style="{
+      transform: 'scale(' + scale + ')'
+    }"
+  >
+    <OpenviduVideo :publisher="publisherUser" />
+  </Draggable>
+  `,
   components: { OpenviduVideo, Draggable },
   setup() {
     const { users } = useChannel(channel);
@@ -41,7 +90,7 @@ const App = {
       });
     });
 
-    const onUserDrag = ({ x, y }) => {
+    const onUserDrag = debounce(({ x, y }) => {
       const outgoingMessage = createMessage({
         type: "CHANNEL_USER_UPDATE",
         channel,
@@ -51,7 +100,24 @@ const App = {
         },
       });
       socket.send(outgoingMessage);
-    };
+    }, 100);
+
+    const scale = ref(0.5);
+
+    watch(
+      scale,
+      () => {
+        const outgoingMessage = createMessage({
+          type: "CHANNEL_USER_UPDATE",
+          channel,
+          value: {
+            userScale: scale.value,
+          },
+        });
+        socket.send(outgoingMessage);
+      },
+      { immediate: true }
+    );
 
     return {
       ...useUser(),
@@ -59,29 +125,9 @@ const App = {
       publisherUser,
       subscribersUsers,
       onUserDrag,
+      scale,
     };
   },
-  template: `
-  <div class="buttons">
-    <button v-if="!sessionStarted" @click="joinSession">Join</button>
-    <button v-if="sessionStarted" @click="leaveSession">Leave</button>
-  </div>
-  
-  <div
-    v-for="(subscriber, i) in subscribersUsers"
-    style="transform: scale(0.5); transform-origin: 0 0; position: absolute; filter: blur(0); mix-blend-mode: multiply"
-    :style="{left: (subscriber.user ? subscriber.user.userX : '') + 'px', top: (subscriber.user ? subscriber.user.userY : '') + 'px'}"
-  >
-    <OpenviduVideo :publisher="subscriber" />
-    <!-- <div>{{ subscriber ? subscriber.user : '' }}</div> -->
-  </div>
-
-
-  <Draggable @drag="onUserDrag" style="transform: scale(0.5); transform-origin: 0 0; filter: blur(0); mix-blend-mode: multiply">
-    <OpenviduVideo :publisher="publisherUser" />
-    <!-- <div>{{ publisherUser ? publisherUser.user : '' }}</div> -->
-  </Draggable>
-  `,
 };
 
 const app = createApp(App);
