@@ -16,7 +16,7 @@ console.log(debounce);
 
 const App = {
   template: `
-  <div class="buttons">
+  <div>
     <button v-if="!sessionStarted" @click="joinSession">Join</button>
     <button v-if="sessionStarted" @click="leaveSession">Leave</button>
     <input
@@ -35,7 +35,7 @@ const App = {
       transform-origin: 0 0;
       position: absolute;
       filter: blur(0);
-      mix-blend-mode: normal;
+      mix-blend-mode: difference;
     "
     :style="{
       transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
@@ -52,7 +52,7 @@ const App = {
     style="
       transform-origin: 0 0;
       filter: blur(0);
-      mix-blend-mode: normal;
+      mix-blend-mode: difference;
     "
     :style="{
       transform: 'scale(' + scale + ')'
