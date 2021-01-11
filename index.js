@@ -1,18 +1,8 @@
-import { createApp, computed, ref, watch } from "./src/deps/vue.js";
-
-import {
-  useUser,
-  useOpenvidu,
-  OpenviduVideo,
-  createMessage,
-  debounce,
-} from "./src/deps/live.js";
-
-import { useChannel, Draggable, socket } from "./src/deps/hackaton.js";
-
+import { createApp, ref, watch } from "./src/deps/vue.js";
+import { OpenviduVideo, createMessage, debounce } from "./src/deps/live.js";
+import { Draggable, socket } from "./src/deps/hackaton.js";
+import { useOpenviduUsers } from "./src/lib/index.js";
 import { channel } from "./config.js";
-
-console.log(debounce);
 
 const App = {
   template: `
@@ -30,16 +20,16 @@ const App = {
   </div>
 
   <div
-    v-for="(subscriber, i) in subscribersUsers"
+    v-for="subscriber in subscribers"
     style="
       transform-origin: 0 0;
       position: absolute;
       filter: blur(0);
       mix-blend-mode: difference;
+      transition: all 100ms linear;
     "
     :style="{
       transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
-      transition: 'all 100ms linear',
       left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
       top: (subscriber.user ? subscriber.user.userY : '') + 'px'
     }"
@@ -58,37 +48,18 @@ const App = {
       transform: 'scale(' + scale + ')'
     }"
   >
-    <OpenviduVideo :publisher="publisherUser" />
+    <OpenviduVideo :publisher="publisher" />
   </Draggable>
   `,
   components: { OpenviduVideo, Draggable },
   setup() {
-    const { users } = useChannel(channel);
-    const openvidu = useOpenvidu(channel);
-
-    const publisherUser = computed(() => {
-      if (openvidu.publisher.value) {
-        const userId = JSON.parse(
-          openvidu.publisher.value.stream.connection.data
-        ).userId;
-        const user = users.value.find((user) => user.userId === userId);
-        if (user) {
-          openvidu.publisher.value.user = user;
-        }
-      }
-      return openvidu.publisher.value;
-    });
-
-    const subscribersUsers = computed(() => {
-      return openvidu.subscribers.value.map((subscriber) => {
-        const userId = JSON.parse(subscriber.stream.connection.data).userId;
-        const user = users.value.find((user) => user.userId === userId);
-        if (user) {
-          subscriber.user = user;
-        }
-        return subscriber;
-      });
-    });
+    const {
+      sessionStarted,
+      joinSession,
+      leaveSession,
+      publisher,
+      subscribers,
+    } = useOpenviduUsers(channel);
 
     const onUserDrag = debounce(({ x, y }) => {
       const outgoingMessage = createMessage({
@@ -120,10 +91,11 @@ const App = {
     );
 
     return {
-      ...useUser(),
-      ...openvidu,
-      publisherUser,
-      subscribersUsers,
+      sessionStarted,
+      joinSession,
+      leaveSession,
+      publisher,
+      subscribers,
       onUserDrag,
       scale,
     };
