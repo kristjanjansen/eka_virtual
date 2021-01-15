@@ -8,6 +8,7 @@ body {
   background: white;
   color: black;
 }
+
 button {
   outline: none;
   border-radius: 12px;
@@ -15,6 +16,7 @@ button {
   padding: 8px;
   border: none;
 }
+
 .toolbar {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
@@ -27,4 +29,33 @@ button {
 }
 .toolbar > *:last-child {
   margin-right: 0;
+}
+
+input[type="range"] {
+  display: block;
+  -webkit-appearance: none;
+  width: 100%;
+  background: var(--primary);
+  height: var(--border-width);
+  position: relative;
+  outline: none;
+  width: 100%;
+  margin-bottom: var(--base5);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: var(--border-width) solid var(--primary);
+  height: var(--slider-size);
+  width: var(--slider-size);
+  border-radius: 1000px;
+  background: white;
+  cursor: pointer;
+  background: var(--white);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  height: calc(var(--slider-size) * 1.05);
+  width: calc(var(--slider-size) * 1.05);
+  border-radius: 1000px;
 }
