@@ -6,6 +6,13 @@ import { channel } from "./config.js";
 
 import { Select } from "./src/components/index.js";
 
+import { getSheet } from "./src/lib/index.js";
+
+getSheet("1UiT9-5swmTl5FSpluz9tGHPoowCBQZ9WSed0q9ZaSaI").then((sounds) => {
+  const soundMap = Object.fromEntries(sounds.map(({ key, url }) => [key, url]));
+  console.log(soundMap);
+});
+
 const App = {
   components: { OpenviduVideo, Draggable, Select },
   template: `
