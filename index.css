@@ -23,6 +23,7 @@ button {
   padding: 10px;
   display: inline-flex;
   align-items: center;
+  color: white;
 }
 .toolbar > * {
   margin-right: 8px;
@@ -35,27 +36,19 @@ input[type="range"] {
   display: block;
   -webkit-appearance: none;
   width: 100%;
-  background: var(--primary);
-  height: var(--border-width);
+  background: white;
+  height: 2px;
   position: relative;
   outline: none;
   width: 100%;
-  margin-bottom: var(--base5);
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  border: var(--border-width) solid var(--primary);
-  height: var(--slider-size);
-  width: var(--slider-size);
-  border-radius: 1000px;
+  border: 1px solid white;
   background: white;
-  cursor: pointer;
-  background: var(--white);
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  height: calc(var(--slider-size) * 1.05);
-  width: calc(var(--slider-size) * 1.05);
+  height: 16px;
+  width: 16px;
   border-radius: 1000px;
+  cursor: pointer;
 }

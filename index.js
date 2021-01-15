@@ -34,14 +34,13 @@ const App = {
     <div class="toolbar" v-if="sessionStarted">
       <button @click="leaveSession">Leave</button>
       <input
-        v-if="sessionStarted"
         type="range"
         v-model="scale"
         min="0.1"
         max="0.8"
         step="0.01"
       />
-      Blend mode: 
+      <div>Blend&nbsp;mode</div>
       <Select
         :options="{
           normal: 'Normal',
