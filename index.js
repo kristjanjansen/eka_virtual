@@ -9,9 +9,27 @@ import { Select } from "./src/components/index.js";
 const App = {
   components: { OpenviduVideo, Draggable, Select },
   template: `
+  <iframe
+    style="
+      display: block;      
+      border: none; 
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1000;
+    "
+    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
+    allowfullscreen
+  />
   <div>
-    <button v-if="!sessionStarted" @click="joinSession">Join</button>
-    <div v-if="sessionStarted">
+    <div class="toolbar" v-if="!sessionStarted">
+      <button @click="joinSession">Join</button>
+    </div>
+    <div class="toolbar" v-if="sessionStarted">
       <button @click="leaveSession">Leave</button>
       <input
         v-if="sessionStarted"
@@ -49,7 +67,12 @@ const App = {
       top: (subscriber.user ? subscriber.user.userY : '') + 'px'
     }"
   >
-    <OpenviduVideo :publisher="subscriber" />
+    <OpenviduVideo
+      :publisher="subscriber"
+      style="
+        clipPath: circle(33%)
+      "
+    />
   </div>
 
   <Draggable
@@ -63,7 +86,12 @@ const App = {
       transform: 'scale(' + scale + ')'
     }"
   >
-    <OpenviduVideo :publisher="publisher" />
+    <OpenviduVideo
+      :publisher="publisher"
+      style="
+        clipPath: circle(33%)
+      "
+    />
   </Draggable>
   `,
   setup() {
