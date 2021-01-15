@@ -3,8 +3,28 @@
 }
 body {
   margin: 0;
-  padding: 24px;
+  padding: 16px;
   font-family: sans-serif;
   background: white;
   color: black;
+}
+button {
+  outline: none;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 8px;
+  border: none;
+}
+.toolbar {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+.toolbar > * {
+  margin-right: 8px;
+}
+.toolbar > *:last-child {
+  margin-right: 0;
 }
