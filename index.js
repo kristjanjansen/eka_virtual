@@ -8,11 +8,6 @@ import { Select } from "./src/components/index.js";
 
 import { getSheet } from "./src/lib/index.js";
 
-getSheet("1UiT9-5swmTl5FSpluz9tGHPoowCBQZ9WSed0q9ZaSaI").then((sounds) => {
-  const soundMap = Object.fromEntries(sounds.map(({ key, url }) => [key, url]));
-  console.log(soundMap);
-});
-
 const App = {
   components: { OpenviduVideo, Draggable, Select },
   template: `
@@ -100,6 +95,11 @@ const App = {
       "
     />
   </Draggable>
+  <div style="position: fixed; bottom: 60px; left: 20px;">
+    <div v-for="(sound, key) in soundMap" style="display: flex; align-items: center; margin-top: 4px;">
+     <audio controls :src="sound" />&emsp;{{ key }} 
+    </div>
+  </div>
   `,
   setup() {
     const blendmode = ref("normal");
@@ -141,6 +141,15 @@ const App = {
       { immediate: true }
     );
 
+    const soundMap = ref({});
+
+    getSheet("1UiT9-5swmTl5FSpluz9tGHPoowCBQZ9WSed0q9ZaSaI").then((sounds) => {
+      soundMap.value = Object.fromEntries(
+        sounds.map(({ key, url }) => [key, url])
+      );
+      console.log(soundMap.value);
+    });
+
     return {
       sessionStarted,
       joinSession,
@@ -150,6 +159,7 @@ const App = {
       onUserDrag,
       scale,
       blendmode,
+      soundMap,
     };
   },
 };
