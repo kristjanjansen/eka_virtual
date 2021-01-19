@@ -17,12 +17,17 @@ h5,
 h6 {
   margin-top: 0;
 }
+
 button {
   outline: none;
   border-radius: 12px;
   background: #ffffff;
   padding: 8px;
   border: none;
+}
+
+button:hover {
+  background: rgb(230, 230, 230);
 }
 
 input[type="range"] {
@@ -78,4 +83,26 @@ input[type="range"]::-webkit-slider-thumb {
   padding: 24px;
   color: white;
   border-radius: 8px;
+}
+
+/* Controls */
+
+.controls-reactions {
+  display: flex;
+  justify-content: center;
+}
+
+.controls-reactions button {
+  background: none;
+  font-size: 24px;
+}
+
+.controls-buttons {
+  background: #efefef;
+  border-radius: 1000px;
+  padding: 0 8px;
+}
+
+.controls-buttons button {
+  background: none;
 }
