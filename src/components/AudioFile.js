@@ -27,7 +27,6 @@ export default {
     });
 
     events.on("play", (name) => {
-      console.log("af", name);
       if (name === props.name) {
         muted.value = false;
         audioRef.value.play();

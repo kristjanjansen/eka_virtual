@@ -99,12 +99,37 @@ const App = {
       "
     />
   </Draggable>
-  <div style="position: fixed; display: flex; bottom: 60px; left: 20px;">
-    <div v-for="(src, name) in soundMap" style="display: flex; align-items: center; margin-top: 4px;">
-     <AudioFile :src="src" :name="name" />
-     <button @click="() => onPlay(name)">{{ name }}</button>
+  <div class="overlay" v-show="settingsOpened">
+    <div style="
+      background: rgba(0,0,0,0.5);
+      padding: 24px; color: white;
+      border-radius: 8px;
+    ">
+      <h3 style="margin-top: 0;">Sound tester</h3>
+      <div
+        v-for="(src, name) in soundMap"
+        style="
+          display: flex;
+          align-items: center;
+          margin-top: 4px;
+        "
+      >
+        <AudioFile :src="src" :name="name" />
+        {{ name }}
+        &nbsp;
+        <button style="transform: scale(0.8);" @click="() => onPlay(name)">Play</button>
+        &nbsp;
+        <button style="transform: scale(0.8);" @click="() => onPause(name)">Pause</button>
+      </div>
     </div>
   </div>
+  <div
+    @click="settingsOpened = !settingsOpened"
+    style="position: fixed; top: 20px; right: 64px;"
+  >
+    <img src="files/settings.svg" />
+  </div>
+  
   `,
   setup() {
     const blendmode = ref("normal");
@@ -161,6 +186,8 @@ const App = {
       events.emit("pause", name);
     };
 
+    const settingsOpened = ref(false);
+
     return {
       sessionStarted,
       joinSession,
@@ -173,6 +200,7 @@ const App = {
       soundMap,
       onPlay,
       onPause,
+      settingsOpened,
     };
   },
 };
