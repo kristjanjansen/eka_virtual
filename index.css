@@ -1,3 +1,11 @@
+:root {
+  --main-bg: #242424;
+  --box-bg: #595959;
+  --box-radius: 10px;
+  --button-bg: #efefef;
+  --button-radius: 100px;
+  --text-color: #f5f5f5;
+}
 * {
   box-sizing: border-box;
 }
@@ -5,8 +13,7 @@ body {
   margin: 0;
   padding: 16px;
   font-family: sans-serif;
-  background: white;
-  color: black;
+  background: var(--main-bg);
 }
 
 h1,
@@ -20,14 +27,14 @@ h6 {
 
 button {
   outline: none;
-  border-radius: 12px;
-  background: #ffffff;
   padding: 8px;
   border: none;
+  border-radius: var(--button-radius);
+  background: var(--button-bg);
 }
 
 button:hover {
-  background: rgb(230, 230, 230);
+  filter: brightness(90%);
 }
 
 input[type="range"] {
@@ -78,11 +85,13 @@ input[type="range"]::-webkit-slider-thumb {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.overlay > * {
-  background: rgba(0, 0, 0, 0.5);
+/* Modal */
+
+.modal {
+  background: var(--box-bg);
+  border-radius: var(--box-radius);
   padding: 24px;
   color: white;
-  border-radius: 8px;
 }
 
 /* Controls */
