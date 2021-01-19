@@ -111,6 +111,7 @@ const App = {
   >
     <Controls @toggleVideo="onToggleVideo" />
   </div>
+  <Setup />
   `,
   setup() {
     const blendmode = ref("normal");

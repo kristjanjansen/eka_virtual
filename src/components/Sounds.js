@@ -4,12 +4,14 @@ import { getSheet } from "../lib/index.js";
 
 import { Sound } from "./index.js";
 
+import { sheetId } from "../../config.js";
+
 export default {
   components: { Sound },
   setup() {
     const soundsMap = ref({});
 
-    getSheet("1UiT9-5swmTl5FSpluz9tGHPoowCBQZ9WSed0q9ZaSaI").then((sounds) => {
+    getSheet(sheetId).then((sounds) => {
       soundsMap.value = Object.fromEntries(
         sounds.map(({ key, url }) => [key, url])
       );
@@ -30,7 +32,7 @@ export default {
   },
   template: `
   <div class="overlay">
-    <div>
+    <div class="modal">
       <h3>Sound tester</h3>
       <div
         v-for="(src, name) in soundsMap"
