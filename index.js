@@ -9,12 +9,12 @@ import { Draggable, socket } from "./src/deps/hackaton.js";
 import { useOpenviduUsers } from "./src/lib/index.js";
 import { channel } from "./config.js";
 
-import { Select, AudioFile } from "./src/components/index.js";
+import { Select, Sounds } from "./src/components/index.js";
 
 import { getSheet } from "./src/lib/index.js";
 
 const App = {
-  components: { OpenviduVideo, Draggable, Select, AudioFile },
+  components: { OpenviduVideo, Draggable, Select, Sounds },
   template: `
   <iframe
     style="
@@ -99,30 +99,7 @@ const App = {
       "
     />
   </Draggable>
-  <div class="overlay" v-show="settingsOpened">
-    <div style="
-      background: rgba(0,0,0,0.5);
-      padding: 24px; color: white;
-      border-radius: 8px;
-    ">
-      <h3 style="margin-top: 0;">Sound tester</h3>
-      <div
-        v-for="(src, name) in soundMap"
-        style="
-          display: flex;
-          align-items: center;
-          margin-top: 4px;
-        "
-      >
-        <AudioFile :src="src" :name="name" />
-        {{ name }}
-        &nbsp;
-        <button style="transform: scale(0.8);" @click="() => onPlay(name)">Play</button>
-        &nbsp;
-        <button style="transform: scale(0.8);" @click="() => onPause(name)">Pause</button>
-      </div>
-    </div>
-  </div>
+  <Sounds v-show="settingsOpened" />
   <div
     @click="settingsOpened = !settingsOpened"
     style="position: fixed; top: 20px; right: 64px;"

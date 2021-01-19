@@ -1,2 +1,3 @@
 export { default as Select } from "./Select.js";
-export { default as AudioFile } from "./AudioFile.js";
+export { default as Sound } from "./Sound.js";
+export { default as Sounds } from "./Sounds.js";
