@@ -54,13 +54,13 @@ export default {
     return { video, camera, cameraOptions, mic, micOptions, onStart };
   },
   template: `
-  <div class="overlay" style="background: rgba(0,0,0,0.9);">
+  <div class="overlay" style="background: none">
     <div class="modal" style="display: grid; gap: 16px;">
       <video
         style="
           clipPath: circle(40%);
           width: 320px;
-          transform: scale(-1,1);
+          transform: scale(1,1);
         "
         ref="video"
         autoplay

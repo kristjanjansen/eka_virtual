@@ -53,3 +53,28 @@ export default {
   </div>
   `,
 };
+
+/*
+
+    <!--div class="toolbar">
+      <button @click="leaveSession">Leave</button>
+      <input
+        type="range"
+        v-model="scale"
+        min="0.1"
+        max="0.8"
+        step="0.01"
+      />
+      <div>Blend&nbsp;mode</div>
+      <Select
+        :options="{
+          normal: 'Normal',
+          multiply: 'Multiply',
+          difference: 'Difference',
+          screen: 'Screen'
+        }"
+        v-model="blendmode"
+      />
+    </div-->
+
+    */

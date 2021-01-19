@@ -26,92 +26,75 @@ const App = {
     allowfullscreen
   /-->
   <div class="overlay" style="background: #242424; z-index: -1000" />
-  <div>
-    <div class="toolbar" v-if="!sessionStarted">
-      <button @click="joinSession">Join</button>
+
+  <div v-if="sessionStarted">
+    
+    <div
+      v-for="subscriber in subscribers"
+      style="
+        transform-origin: 0 0;
+        position: absolute;
+        filter: blur(0);
+        transition: all 100ms linear;
+      "
+      :style="{
+        'mix-blend-mode': blendmode,
+        transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
+        left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
+        top: (subscriber.user ? subscriber.user.userY : '') + 'px'
+      }"
+    >
+      <OpenviduVideo
+        :publisher="subscriber"
+        style="
+          clipPath: circle(33%)
+        "
+      />
     </div>
-    <div class="toolbar" v-if="sessionStarted">
-      <button @click="leaveSession">Leave</button>
-      <input
-        type="range"
-        v-model="scale"
-        min="0.1"
-        max="0.8"
-        step="0.01"
+    <Draggable
+      @drag="onUserDrag"
+      style="
+        transform-origin: 0 0;
+        filter: blur(0);
+      "
+      :style="{
+        'mix-blend-mode': blendmode,
+        transform: 'scale(' + scale + ')'
+      }"
+    >
+      <OpenviduVideo
+        :publisher="publisher"
+        style="
+          clipPath: circle(33%)
+        "
       />
-      <div>Blend&nbsp;mode</div>
-      <Select
-        :options="{
-          normal: 'Normal',
-          multiply: 'Multiply',
-          difference: 'Difference',
-          screen: 'Screen'
-        }"
-        v-model="blendmode"
-      />
+    </Draggable>
+    <Settings v-show="settingsOpened" />
+    <div
+      @click="settingsOpened = !settingsOpened"
+      style="position: fixed; top: 32px; right: 32px;"
+    >
+      <img src="files/settings.svg" style="filter: invert()"/>
+    </div>
+    <div style="
+      position: fixed;
+      right: 0;
+      bottom: 32px;
+      left: 0;
+      display: flex;
+      justify-content: center;
+    "
+    >
+      <Controls @leaveSession="leaveSession" />
     </div>
   </div>
 
-  <div
-    v-for="subscriber in subscribers"
-    style="
-      transform-origin: 0 0;
-      position: absolute;
-      filter: blur(0);
-      transition: all 100ms linear;
-    "
-    :style="{
-      'mix-blend-mode': blendmode,
-      transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
-      left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
-      top: (subscriber.user ? subscriber.user.userY : '') + 'px'
-    }"
-  >
-    <OpenviduVideo
-      :publisher="subscriber"
-      style="
-        clipPath: circle(33%)
-      "
-    />
-  </div>
-
-  <Draggable
-    @drag="onUserDrag"
-    style="
-      transform-origin: 0 0;
-      filter: blur(0);
-    "
-    :style="{
-      'mix-blend-mode': blendmode,
-      transform: 'scale(' + scale + ')'
-    }"
-  >
-    <OpenviduVideo
-      :publisher="publisher"
-      style="
-        clipPath: circle(33%)
-      "
-    />
-  </Draggable>
-  <Sounds v-show="settingsOpened" />
-  <div
-    @click="settingsOpened = !settingsOpened"
-    style="position: fixed; top: 32px; right: 32px;"
-  >
-    <img src="files/settings.svg" style="filter: invert()"/>
-  </div>
-  <div style="
-    position: fixed;
-    right: 0;
-    bottom: 32px;
-    left: 0;
-    display: flex;
-    justify-content: center;
-  "
-  >
-    <Controls @toggleVideo="onToggleVideo" />
-  </div>
-  <Setup />
+  <Setup
+    v-if="!sessionStarted"
+    @start="joinSession"
+    v-model:camera-index="cameraIndex"
+    v-model:mic-index="micIndex"
+  />
   `,
   setup() {
     const blendmode = ref("normal");
@@ -136,7 +119,7 @@ const App = {
       socket.send(outgoingMessage);
     }, 100);
 
-    const scale = ref(0.5);
+    const scale = ref(0.25);
 
     watch(
       scale,
@@ -155,7 +138,8 @@ const App = {
 
     const settingsOpened = ref(false);
 
-    const onToggleVideo = () => console.log("video toggled");
+    const cameraIndex = ref(0);
+    const micIndex = ref(0);
 
     return {
       sessionStarted,
@@ -167,7 +151,8 @@ const App = {
       scale,
       blendmode,
       settingsOpened,
-      onToggleVideo,
+      cameraIndex,
+      micIndex,
     };
   },
 };
