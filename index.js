@@ -1,22 +1,15 @@
 import { createApp, ref, watch } from "./src/deps/vue.js";
-import {
-  OpenviduVideo,
-  createMessage,
-  debounce,
-  events,
-} from "./src/deps/live.js";
+import { OpenviduVideo, createMessage, debounce } from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
 import { useOpenviduUsers } from "./src/lib/index.js";
 import { channel } from "./config.js";
 
-import { Select, Sounds } from "./src/components/index.js";
-
-import { getSheet } from "./src/lib/index.js";
+import * as components from "./src/components/index.js";
 
 const App = {
-  components: { OpenviduVideo, Draggable, Select, Sounds },
+  components: { OpenviduVideo, Draggable, ...components },
   template: `
-  <iframe
+  <!--iframe
     style="
       display: block;      
       border: none; 
@@ -31,7 +24,8 @@ const App = {
     "
     src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
     allowfullscreen
-  />
+  /-->
+  <div class="overlay" style="background: #242424; z-index: -1000" />
   <div>
     <div class="toolbar" v-if="!sessionStarted">
       <button @click="joinSession">Join</button>
@@ -102,11 +96,21 @@ const App = {
   <Sounds v-show="settingsOpened" />
   <div
     @click="settingsOpened = !settingsOpened"
-    style="position: fixed; top: 20px; right: 64px;"
+    style="position: fixed; top: 32px; right: 32px;"
   >
-    <img src="files/settings.svg" />
+    <img src="files/settings.svg" style="filter: invert()"/>
   </div>
-  
+  <div style="
+    position: fixed;
+    right: 0;
+    bottom: 32px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+  "
+  >
+    <Controls @toggleVideo="onToggleVideo" />
+  </div>
   `,
   setup() {
     const blendmode = ref("normal");
@@ -148,22 +152,9 @@ const App = {
       { immediate: true }
     );
 
-    const soundMap = ref({});
-
-    getSheet("1UiT9-5swmTl5FSpluz9tGHPoowCBQZ9WSed0q9ZaSaI").then((sounds) => {
-      soundMap.value = Object.fromEntries(
-        sounds.map(({ key, url }) => [key, url])
-      );
-    });
-
-    const onPlay = (name) => {
-      events.emit("play", name);
-    };
-    const onPause = (name) => {
-      events.emit("pause", name);
-    };
-
     const settingsOpened = ref(false);
+
+    const onToggleVideo = () => console.log("video toggled");
 
     return {
       sessionStarted,
@@ -174,10 +165,8 @@ const App = {
       onUserDrag,
       scale,
       blendmode,
-      soundMap,
-      onPlay,
-      onPause,
       settingsOpened,
+      onToggleVideo,
     };
   },
 };

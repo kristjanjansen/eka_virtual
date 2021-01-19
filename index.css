@@ -17,12 +17,17 @@ h5,
 h6 {
   margin-top: 0;
 }
+
 button {
   outline: none;
   border-radius: 12px;
   background: #ffffff;
   padding: 8px;
   border: none;
+}
+
+button:hover {
+  background: rgb(230, 230, 230);
 }
 
 input[type="range"] {
