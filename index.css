@@ -84,3 +84,24 @@ input[type="range"]::-webkit-slider-thumb {
   color: white;
   border-radius: 8px;
 }
+
+/* Controls */
+
+.controls-reactions {
+  display: flex;
+  justify-content: center;
+}
+
+.controls-reactions button {
+  background: none;
+}
+
+.controls-buttons {
+  background: #efefef;
+  border-radius: 1000px;
+  padding: 0 8px;
+}
+
+.controls-buttons button {
+  background: none;
+}
