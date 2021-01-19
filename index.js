@@ -1,15 +1,20 @@
 import { createApp, ref, watch } from "./src/deps/vue.js";
-import { OpenviduVideo, createMessage, debounce } from "./src/deps/live.js";
+import {
+  OpenviduVideo,
+  createMessage,
+  debounce,
+  events,
+} from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
 import { useOpenviduUsers } from "./src/lib/index.js";
 import { channel } from "./config.js";
 
-import { Select } from "./src/components/index.js";
+import { Select, AudioFile } from "./src/components/index.js";
 
 import { getSheet } from "./src/lib/index.js";
 
 const App = {
-  components: { OpenviduVideo, Draggable, Select },
+  components: { OpenviduVideo, Draggable, Select, AudioFile },
   template: `
   <iframe
     style="
@@ -94,9 +99,10 @@ const App = {
       "
     />
   </Draggable>
-  <div style="position: fixed; bottom: 60px; left: 20px;">
-    <div v-for="(sound, key) in soundMap" style="display: flex; align-items: center; margin-top: 4px;">
-     <audio controls :src="sound" />&emsp;{{ key }} 
+  <div style="position: fixed; display: flex; bottom: 60px; left: 20px;">
+    <div v-for="(src, name) in soundMap" style="display: flex; align-items: center; margin-top: 4px;">
+     <AudioFile :src="src" :name="name" />
+     <button @click="() => onPlay(name)">{{ name }}</button>
     </div>
   </div>
   `,
@@ -146,8 +152,14 @@ const App = {
       soundMap.value = Object.fromEntries(
         sounds.map(({ key, url }) => [key, url])
       );
-      console.log(soundMap.value);
     });
+
+    const onPlay = (name) => {
+      events.emit("play", name);
+    };
+    const onPause = (name) => {
+      events.emit("pause", name);
+    };
 
     return {
       sessionStarted,
@@ -159,6 +171,8 @@ const App = {
       scale,
       blendmode,
       soundMap,
+      onPlay,
+      onPause,
     };
   },
 };
