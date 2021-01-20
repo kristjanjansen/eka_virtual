@@ -56,25 +56,30 @@ export default {
   template: `
   <div class="overlay" style="background: none">
     <div class="modal" style="display: grid; gap: 16px;">
-      <div style="display: flex; justify-content: center;">
+      <div style="position: relative; display: flex; justify-content: center;">
         <video
           style="
-            clipPath: circle(40%);
-            width: 340px;
-            transform: scale(-1,1);
+            width: 100%;
+            max-width: 200px;
+            margin: 0 8px;
+            clip-path: circle(40%);
+            transform: scale(-1, 1);
           "
           ref="video"
           autoplay
           muted
         />
+        <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center">
+          <div style="border: 3px solid white; border-radius: 1000px; width: 150px; height: 150px;" />
+        </div>
       </div>
-      <div style="display: grid; gap: 16px; grid-template-columns: auto auto;">
+      <div style="display: grid; gap: 16px; grid-template-columns: auto;">
         <label>Select camera</label>
         <Select v-model="camera" :options="cameraOptions" />
         <label>Select mic</label>
         <Select v-model="mic" :options="micOptions" />
       </div>
-      <button @click="onStart">Start</button>
+      <button class="primary" @click="onStart">Start</button>
     </div>
   </div>
   `,
