@@ -43,12 +43,26 @@ const App = {
       class="bubble"
       style="
         position: fixed;
-        top: 100px;
+        top: 150px;
         left: 100px;
         width: 400px;
         height: 400px;
       "
-    />
+    >
+      Chillout
+    </div>
+    <div
+      class="bubble"
+      style="
+        position: fixed;
+        top: 100px;
+        left: 600px;
+        width: 300px;
+        height: 300px;
+      "
+    >
+      Sprint
+    </div>
     <div
       v-for="subscriber in subscribers"
       style="
