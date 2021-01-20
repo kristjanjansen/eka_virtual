@@ -14,11 +14,11 @@ export default {
     </div>  
     <div class="controls-buttons">
       <button @click="emit('leaveSession')"><img src="./files/phone-missed.svg"></button>
-      <button @click="emit('toggleMic')"><img src="./files/mic.svg"></button>
-      <button @click="emit('toggleVideo')"><img src="./files/video.svg"></button>
-      <button @click="emit('toggleScreenshare')"><img src="./files/monitor.svg"></button>
+      <button @click="emit('toggleMic')"><img style="opacity: 0.25" src="./files/mic.svg"></button>
+      <button @click="emit('toggleVideo')"><img style="opacity: 0.25" src="./files/video.svg"></button>
+      <button @click="emit('toggleScreenshare')"><img style="opacity: 0.25" src="./files/monitor.svg"></button>
       <button @click="showReactions = !showReactions"><img src="./files/smile.svg"></button>
-      <button @click="emit('toggleChat')"><img src="./files/message-square.svg"></button>
+      <button @click="emit('toggleChat')"><img style="opacity: 0.25" src="./files/message-square.svg"></button>
     </div>
   </div>
   `,
