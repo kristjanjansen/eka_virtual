@@ -129,11 +129,11 @@ const App = {
     src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
     allowfullscreen
   />
-  <div
+  <!--div
     v-show="!isScreenshare"
     class="overlay"
     style="background: #242424; z-index: -1000"
-  />
+  /-->
 
   <div v-if="sessionStarted">
     <div

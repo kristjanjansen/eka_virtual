@@ -55,7 +55,7 @@ export default {
     return { video, camera, cameraOptions, mic, micOptions, onStart, radiuses };
   },
   template: `
-  <div class="overlay" style="background: none">
+  <div class="overlay">
     <div class="modal" style="display: grid; gap: 16px;">
       <div style="position: relative; display: flex; justify-content: center;">
         <div
