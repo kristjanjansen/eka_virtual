@@ -1,10 +1,13 @@
 :root {
   --main-bg: #242424;
-  --box-bg: #595959;
-  --box-radius: 10px;
+  --modal-bg: #595959;
+  --border-radius: 10px;
   --button-bg: #efefef;
   --button-radius: 100px;
-  --text-color: #f5f5f5;
+  --font-color: #f5f5f5;
+  --font-size: 14px;
+  --font-family: "Libre Franklin", sans-serif;
+  --accent-color: #ff6854;
 }
 * {
   box-sizing: border-box;
@@ -12,7 +15,7 @@
 body {
   margin: 0;
   padding: 16px;
-  font-family: sans-serif;
+  font-family: var(--font-family);
   background: var(--main-bg);
 }
 
@@ -27,10 +30,17 @@ h6 {
 
 button {
   outline: none;
-  padding: 8px;
+  padding: 16px 8px;
   border: none;
   border-radius: var(--button-radius);
   background: var(--button-bg);
+  font-size: var(--font-size);
+  font-weight: 500;
+  font-family: var(--font-family);
+}
+button.primary {
+  background-color: var(--accent-color);
+  color: white;
 }
 
 button:hover {
@@ -39,6 +49,16 @@ button:hover {
 
 button.active {
   background: red;
+}
+
+label {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+input {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
 }
 
 input[type="range"] {
@@ -62,20 +82,17 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-.toolbar {
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 20px;
-  padding: 10px;
-  display: inline-flex;
-  align-items: center;
-  color: white;
+select {
+  padding: 8px;
+  font-size: var(--font-size);
 }
-.toolbar > * {
-  margin-right: 8px;
+
+img {
+  display: block;
 }
-.toolbar > *:last-child {
-  margin-right: 0;
-}
+/* Custom components */
+
+/* Overlay */
 
 .overlay {
   position: fixed;
@@ -92,8 +109,8 @@ input[type="range"]::-webkit-slider-thumb {
 /* Modal */
 
 .modal {
-  background: var(--box-bg);
-  border-radius: var(--box-radius);
+  background: var(--modal-bg);
+  border-radius: var(--border-radius);
   padding: 24px;
   color: white;
 }
@@ -113,7 +130,7 @@ input[type="range"]::-webkit-slider-thumb {
 .controls-buttons {
   background: #efefef;
   border-radius: 1000px;
-  padding: 0 16px;
+  padding: 0 22px;
 }
 
 .controls-buttons button {
