@@ -74,7 +74,6 @@ export default {
               left: 0;
               top: 0;
               height: 200px;
-              cclip-path: circle(40%);
               transform: scale(-1, 1);
               display: block;
             "

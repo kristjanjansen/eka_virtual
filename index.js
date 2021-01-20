@@ -7,7 +7,7 @@ import {
   safeJsonParse,
 } from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
-import { useOpenviduUsers } from "./src/lib/index.js";
+import { useOpenviduUsers, radiuses } from "./src/lib/index.js";
 import { channel } from "./config.js";
 
 import * as components from "./src/components/index.js";
@@ -68,44 +68,32 @@ const App = {
     <div
       v-for="subscriber in subscribers"
       style="
-        transform-origin: 0 0;
         position: absolute;
-        filter: blur(0);
         transition: all 100ms linear;
       "
       :style="{
-        'mix-blend-mode': blendmode,
-        transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
         left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
         top: (subscriber.user ? subscriber.user.userY : '') + 'px'
       }"
     >
-      <OpenviduVideo
-        :publisher="subscriber"
-        style="
-          clipPath: circle(33%);
-          transform: scale(-1,1);
-        "
-      />
+      <div
+        class="video"
+        :style="{borderRadius: radiuses[1] }"
+      >
+        <OpenviduVideo
+          :publisher="subscriber"
+        />
+      </div>
     </div>
-    <Draggable
-      @drag="onUserDrag"
-      style="
-        transform-origin: 0 0;
-        filter: blur(0);
-      "
-      :style="{
-        'mix-blend-mode': blendmode,
-        transform: 'scale(' + scale + ')'
-      }"
-    >
-      <OpenviduVideo
-        :publisher="publisher"
-        style="
-          clipPath: circle(33%);
-          transform: scale(-1,1);
-        "
-      />
+    <Draggable @drag="onUserDrag">
+      <div
+        class="video"
+        :style="{borderRadius: radiuses[0]}"
+      >
+        <OpenviduVideo
+          :publisher="publisher"
+        />
+      </div>
     </Draggable>
     <div style="
       position: fixed;
@@ -233,6 +221,7 @@ const App = {
       micIndex,
       onScreenshare,
       isScreenshare,
+      radiuses,
     };
   },
 };
