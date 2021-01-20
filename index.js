@@ -9,7 +9,8 @@ import * as components from "./src/components/index.js";
 const App = {
   components: { OpenviduVideo, Draggable, ...components },
   template: `
-  <!--iframe
+  <iframe
+    v-show="isScreenshare"
     style="
       display: block;      
       border: none; 
@@ -24,8 +25,12 @@ const App = {
     "
     src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
     allowfullscreen
-  /-->
-  <div class="overlay" style="background: #242424; z-index: -1000" />
+  />
+  <div
+    v-show="!isScreenshare"
+    class="overlay"
+    style="background: #242424; z-index: -1000"
+  />
 
   <div v-if="sessionStarted">
     <div
@@ -94,7 +99,10 @@ const App = {
       justify-content: center;
     "
     >
-      <Controls @leaveSession="leaveSession" />
+      <Controls
+        @leaveSession="leaveSession"
+        @toggleScreenshare="isScreenshare = !isScreenshare"
+      />
     </div>
   </div>
 
@@ -150,6 +158,8 @@ const App = {
     const cameraIndex = ref(0);
     const micIndex = ref(0);
 
+    const isScreenshare = ref(false);
+
     return {
       sessionStarted,
       joinSession,
@@ -162,6 +172,7 @@ const App = {
       settingsOpened,
       cameraIndex,
       micIndex,
+      isScreenshare,
     };
   },
 };
