@@ -4,6 +4,7 @@ import {
   createMessage,
   debounce,
   events,
+  safeJsonParse,
 } from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
 import { useOpenviduUsers } from "./src/lib/index.js";
@@ -42,12 +43,26 @@ const App = {
       class="bubble"
       style="
         position: fixed;
-        top: 100px;
+        top: 150px;
         left: 100px;
         width: 400px;
         height: 400px;
       "
-    />
+    >
+      Chillout
+    </div>
+    <div
+      class="bubble"
+      style="
+        position: fixed;
+        top: 100px;
+        left: 600px;
+        width: 300px;
+        height: 300px;
+      "
+    >
+      Sprint
+    </div>
     <div
       v-for="subscriber in subscribers"
       style="
@@ -66,7 +81,8 @@ const App = {
       <OpenviduVideo
         :publisher="subscriber"
         style="
-          clipPath: circle(33%)
+          clipPath: circle(33%);
+          transform: scale(-1,1);
         "
       />
     </div>
@@ -84,7 +100,8 @@ const App = {
       <OpenviduVideo
         :publisher="publisher"
         style="
-          clipPath: circle(33%)
+          clipPath: circle(33%);
+          transform: scale(-1,1);
         "
       />
     </Draggable>
@@ -106,7 +123,7 @@ const App = {
     >
       <Controls
         @leaveSession="leaveSession"
-        @toggleScreenshare="isScreenshare = !isScreenshare"
+        @toggleScreenshare="onScreenshare"
       />
     </div>
   </div>
@@ -177,6 +194,27 @@ const App = {
 
     const isScreenshare = ref(false);
 
+    const onScreenshare = () => {
+      const outgoingMessage = createMessage({
+        type: "SCREENSHARE",
+        channel,
+      });
+      socket.send(outgoingMessage);
+      console.log(outgoingMessage);
+    };
+
+    socket.addEventListener("message", ({ data }) => {
+      const message = safeJsonParse(data);
+      if (
+        message &&
+        message.type === "SCREENSHARE" &&
+        message.channel === channel
+      ) {
+        console.log("share");
+        isScreenshare.value = !isScreenshare.value;
+      }
+    });
+
     return {
       sessionStarted,
       joinSession,
@@ -189,6 +227,7 @@ const App = {
       settingsOpened,
       cameraIndex,
       micIndex,
+      onScreenshare,
       isScreenshare,
     };
   },
