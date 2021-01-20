@@ -124,4 +124,5 @@ input[type="range"]::-webkit-slider-thumb {
   box-shadow: inset 0px 0px 100px #ffffff;
   border-radius: 10000px;
   opacity: 0.5;
+  pointer-events: none;
 }
