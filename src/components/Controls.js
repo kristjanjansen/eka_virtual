@@ -1,16 +1,17 @@
 import { ref } from "../deps/vue.js";
+import { events } from "../deps/live.js";
 
 export default {
   setup(_props, { emit }) {
     const showReactions = ref(false);
-    return { showReactions, emit };
+    return { showReactions, emit, events };
   },
   template: `
   <div>
     <div class="controls-reactions" v-show="showReactions">
-      <button @click="emit('handRection')">✋</button>
-      <button @click="emit('clapReaction')">👏</button>
-      <button @click="emit('loveReaction')">😍</button>
+      <button @click="events.emit('play','applause')">👏</button>
+      <button @click="events.emit('play','thumbsup')">👍</button>
+      <button @click="events.emit('play','love')">😍</button>
     </div>  
     <div class="controls-buttons">
       <button @click="emit('leaveSession')"><img src="./files/phone-missed.svg"></button>
