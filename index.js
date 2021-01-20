@@ -28,7 +28,16 @@ const App = {
   <div class="overlay" style="background: #242424; z-index: -1000" />
 
   <div v-if="sessionStarted">
-    
+    <div
+      class="bubble"
+      style="
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        width: 400px;
+        height: 400px;
+      "
+    />
     <div
       v-for="subscriber in subscribers"
       style="

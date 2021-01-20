@@ -115,3 +115,13 @@ input[type="range"]::-webkit-slider-thumb {
 .controls-buttons button {
   background: none;
 }
+
+/* Bubble */
+
+.bubble {
+  background: #333333;
+  border: 1px solid #ffffff;
+  box-shadow: inset 0px 0px 100px #ffffff;
+  border-radius: 10000px;
+  opacity: 0.5;
+}

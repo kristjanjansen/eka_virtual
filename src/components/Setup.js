@@ -56,16 +56,18 @@ export default {
   template: `
   <div class="overlay" style="background: none">
     <div class="modal" style="display: grid; gap: 16px;">
-      <video
-        style="
-          clipPath: circle(40%);
-          width: 320px;
-          transform: scale(1,1);
-        "
-        ref="video"
-        autoplay
-        muted
-      />
+      <div style="display: flex; justify-content: center;">
+        <video
+          style="
+            clipPath: circle(40%);
+            width: 340px;
+            transform: scale(1,1);
+          "
+          ref="video"
+          autoplay
+          muted
+        />
+      </div>
       <div style="display: grid; gap: 16px; grid-template-columns: auto auto;">
         <label>Select camera</label>
         <Select v-model="camera" :options="cameraOptions" />
