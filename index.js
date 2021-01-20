@@ -4,6 +4,7 @@ import {
   createMessage,
   debounce,
   events,
+  safeJsonParse,
 } from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
 import { useOpenviduUsers } from "./src/lib/index.js";
@@ -106,7 +107,7 @@ const App = {
     >
       <Controls
         @leaveSession="leaveSession"
-        @toggleScreenshare="isScreenshare = !isScreenshare"
+        @toggleScreenshare="onScreenshare"
       />
     </div>
   </div>
@@ -177,6 +178,27 @@ const App = {
 
     const isScreenshare = ref(false);
 
+    const onScreenshare = () => {
+      const outgoingMessage = createMessage({
+        type: "SCREENSHARE",
+        channel,
+      });
+      socket.send(outgoingMessage);
+      console.log(outgoingMessage);
+    };
+
+    socket.addEventListener("message", ({ data }) => {
+      const message = safeJsonParse(data);
+      if (
+        message &&
+        message.type === "SCREENSHARE" &&
+        message.channel === channel
+      ) {
+        console.log("share");
+        isScreenshare.value = !isScreenshare.value;
+      }
+    });
+
     return {
       sessionStarted,
       joinSession,
@@ -189,6 +211,7 @@ const App = {
       settingsOpened,
       cameraIndex,
       micIndex,
+      onScreenshare,
       isScreenshare,
     };
   },
