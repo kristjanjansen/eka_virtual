@@ -119,14 +119,18 @@ input[type="range"]::-webkit-slider-thumb {
 /* Bubble */
 
 .bubble {
-  background: #333333;
+  background: transparent;
   border: 1px solid #ffffff;
   box-shadow: inset 0px 0px 100px #ffffff;
   border-radius: 10000px;
   opacity: 0.5;
-  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  z-index: 0;
+  transition: all 600ms ease-in-out;
+}
+.bubble:hover {
+  transform: scale(1.05);
 }
