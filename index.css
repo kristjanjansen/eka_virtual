@@ -37,6 +37,10 @@ button:hover {
   filter: brightness(90%);
 }
 
+button.active {
+  background: red;
+}
+
 input[type="range"] {
   display: block;
   -webkit-appearance: none;
@@ -109,11 +113,21 @@ input[type="range"]::-webkit-slider-thumb {
 .controls-buttons {
   background: #efefef;
   border-radius: 1000px;
-  padding: 0 8px;
+  padding: 0 16px;
 }
 
 .controls-buttons button {
   background: none;
+  border-radius: 0;
+}
+.controls-buttons button:hover {
+  background: #eee;
+}
+.controls-buttons button.active {
+  background: #ddd;
+}
+.controls-buttons button.active:hover {
+  background: #dadada;
 }
 
 /* Bubble */
