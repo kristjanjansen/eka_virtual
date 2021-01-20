@@ -7,138 +7,13 @@ import {
   safeJsonParse,
 } from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
-import { useOpenviduUsers } from "./src/lib/index.js";
+import { useOpenviduUsers, radiuses } from "./src/lib/index.js";
 import { channel } from "./config.js";
 
 import * as components from "./src/components/index.js";
 
 const App = {
   components: { OpenviduVideo, Draggable, ...components },
-  template: `
-  <iframe
-    v-show="isScreenshare"
-    style="
-      display: block;      
-      border: none; 
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1000;
-    "
-    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
-    allowfullscreen
-  />
-  <div
-    v-show="!isScreenshare"
-    class="overlay"
-    style="background: #242424; z-index: -1000"
-  />
-
-  <div v-if="sessionStarted">
-    <div
-      v-show="!isScreenshare"
-      class="bubble"
-      style="
-        position: fixed;
-        top: 150px;
-        left: 100px;
-        width: 400px;
-        height: 400px;
-      "
-    >
-      Chillout
-    </div>
-    <div
-      v-show="!isScreenshare"
-      class="bubble"
-      style="
-        position: fixed;
-        top: 100px;
-        left: 600px;
-        width: 300px;
-        height: 300px;
-      "
-    >
-      Sprint
-    </div>
-    <div
-      v-for="subscriber in subscribers"
-      style="
-        transform-origin: 0 0;
-        position: absolute;
-        filter: blur(0);
-        transition: all 100ms linear;
-      "
-      :style="{
-        'mix-blend-mode': blendmode,
-        transform: 'scale(' + (subscriber.user ? subscriber.user.userScale : 0.5) + ')',
-        left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
-        top: (subscriber.user ? subscriber.user.userY : '') + 'px'
-      }"
-    >
-      <OpenviduVideo
-        :publisher="subscriber"
-        style="
-          clipPath: circle(33%);
-          transform: scale(-1,1);
-        "
-      />
-    </div>
-    <Draggable
-      @drag="onUserDrag"
-      style="
-        transform-origin: 0 0;
-        filter: blur(0);
-      "
-      :style="{
-        'mix-blend-mode': blendmode,
-        transform: 'scale(' + scale + ')'
-      }"
-    >
-      <OpenviduVideo
-        :publisher="publisher"
-        style="
-          clipPath: circle(33%);
-          transform: scale(-1,1);
-        "
-      />
-    </Draggable>
-    <div style="
-      position: fixed;
-      right: 0;
-      bottom: 32px;
-      left: 0;
-      display: flex;
-      justify-content: center;
-    "
-    >
-      <Controls
-        @leaveSession="leaveSession"
-        @toggleScreenshare="onScreenshare"
-      />
-    </div>
-  </div>
-  <Settings v-show="settingsOpened" />
-  <!--
-  <div
-    v-if="sessionStarted"
-    @click="settingsOpened = !settingsOpened"
-    style="position: fixed; bottom: 32px; right: 28px;"
-  >
-    <img src="files/settings.svg" style="filter: invert()"/>
-  </div>
-  -->
-  <Setup
-    v-if="!sessionStarted"
-    @start="joinSession"
-    v-model:camera-index="cameraIndex"
-    v-model:mic-index="micIndex"
-  />
-  `,
   setup() {
     const blendmode = ref("normal");
 
@@ -233,8 +108,135 @@ const App = {
       micIndex,
       onScreenshare,
       isScreenshare,
+      radiuses,
     };
   },
+  template: `
+  <iframe
+    v-show="isScreenshare"
+    style="
+      display: block;      
+      border: none; 
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1000;
+    "
+    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
+    allowfullscreen
+  />
+  <!--div
+    v-show="!isScreenshare"
+    class="overlay"
+    style="background: #242424; z-index: -1000"
+  /-->
+
+  <div v-if="sessionStarted">
+    <div
+      v-show="!isScreenshare"
+      class="bubble"
+      style="
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        width: 380px;
+        height: 380px;
+      "
+      :style="{borderRadius: radiuses[2]}"
+    >
+      #chillout
+    </div>
+    <div
+      v-show="!isScreenshare"
+      class="bubble"
+      style="
+        position: fixed;
+        top: 100px;
+        left: 500px;
+        width: 380px;
+        height: 380px;
+      "
+      :style="{borderRadius: radiuses[6]}"
+    >
+      #focus
+    </div>
+    <div
+      v-show="!isScreenshare"
+      class="bubble"
+      style="
+        position: fixed;
+        top: 100px;
+        left: 900px;
+        width: 380px;
+        height: 380px;
+      "
+      :style="{borderRadius: radiuses[4]}"
+    >
+      #random
+    </div>
+    <div
+      v-for="(subscriber, i) in subscribers"
+      class="video"
+      style="
+        position: absolute;
+        transition: all 100ms linear;
+      "
+      :style="{
+        left: (subscriber.user ? subscriber.user.userX : '') + 'px', 
+        top: (subscriber.user ? subscriber.user.userY : '') + 'px',
+        borderRadius: radiuses[(i % radiuses.length) + 1]
+      }"
+    >
+        <OpenviduVideo
+          :publisher="subscriber"
+        />
+    </div>
+    <Draggable @drag="onUserDrag">
+      <div
+        class="video"
+        :style="{borderRadius: radiuses[0]}"
+      >
+        <OpenviduVideo
+          :publisher="publisher"
+        />
+      </div>
+    </Draggable>
+    <div style="
+      position: fixed;
+      right: 0;
+      bottom: 32px;
+      left: 0;
+      display: flex;
+      justify-content: center;
+    "
+    >
+      <Controls
+        @leaveSession="leaveSession"
+        @toggleScreenshare="onScreenshare"
+      />
+    </div>
+  </div>
+  <Settings v-show="settingsOpened" />
+  <!--
+  <div
+    v-if="sessionStarted"
+    @click="settingsOpened = !settingsOpened"
+    style="position: fixed; bottom: 32px; right: 28px;"
+  >
+    <img src="files/settings.svg" style="filter: invert()"/>
+  </div>
+  -->
+  <Setup
+    v-if="!sessionStarted"
+    @start="joinSession"
+    v-model:camera-index="cameraIndex"
+    v-model:mic-index="micIndex"
+  />
+  `,
 };
 
 const app = createApp(App);

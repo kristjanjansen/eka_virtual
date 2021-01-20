@@ -1,5 +1,6 @@
 import { ref, computed } from "../deps/vue.js";
 import { Select } from "./index.js";
+import { radiuses } from "../lib/index.js";
 
 export default {
   components: { Select },
@@ -51,24 +52,36 @@ export default {
 
     const onStart = () => emit("start");
 
-    return { video, camera, cameraOptions, mic, micOptions, onStart };
+    return { video, camera, cameraOptions, mic, micOptions, onStart, radiuses };
   },
   template: `
-  <div class="overlay" style="background: none">
+  <div class="overlay">
     <div class="modal" style="display: grid; gap: 16px;">
       <div style="position: relative; display: flex; justify-content: center;">
-        <video
+        <div
           style="
-            width: 100%;
-            max-width: 200px;
-            margin: 0 8px;
-            clip-path: circle(40%);
-            transform: scale(-1, 1);
+            overflow: hidden;
+            position: relative;
+            border: 3px solid white;
+            width: 200px;
           "
-          ref="video"
-          autoplay
-          muted
-        />
+          :style="{borderRadius: radiuses[0]}"
+        >
+          <video
+            style="
+              position: relative;
+              object-fit: cover;
+              left: 0;
+              top: 0;
+              height: 200px;
+              transform: scale(-1, 1);
+              display: block;
+            "
+            ref="video"
+            autoplay
+            muted
+          />
+        </div>
         <!--
           <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center">
           <div style="border: 3px solid white; border-radius: 1000px; width: 150px; height: 150px;" />
