@@ -40,6 +40,7 @@ const App = {
 
   <div v-if="sessionStarted">
     <div
+      v-show="!isScreenshare"
       class="bubble"
       style="
         position: fixed;
@@ -52,6 +53,7 @@ const App = {
       Chillout
     </div>
     <div
+      v-show="!isScreenshare"
       class="bubble"
       style="
         position: fixed;
@@ -105,13 +107,6 @@ const App = {
         "
       />
     </Draggable>
-    <Settings v-show="settingsOpened" />
-    <div
-      @click="settingsOpened = !settingsOpened"
-      style="position: fixed; top: 32px; right: 32px;"
-    >
-      <img src="files/settings.svg" style="filter: invert()"/>
-    </div>
     <div style="
       position: fixed;
       right: 0;
@@ -127,7 +122,14 @@ const App = {
       />
     </div>
   </div>
-
+  <Settings v-show="settingsOpened" />
+  <div
+    v-if="sessionStarted"
+    @click="settingsOpened = !settingsOpened"
+    style="position: fixed; bottom: 32px; right: 28px;"
+  >
+    <img src="files/settings.svg" style="filter: invert()"/>
+  </div>
   <Setup
     v-if="!sessionStarted"
     @start="joinSession"
