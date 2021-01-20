@@ -1,5 +1,10 @@
 import { createApp, ref, watch } from "./src/deps/vue.js";
-import { OpenviduVideo, createMessage, debounce } from "./src/deps/live.js";
+import {
+  OpenviduVideo,
+  createMessage,
+  debounce,
+  events,
+} from "./src/deps/live.js";
 import { Draggable, socket } from "./src/deps/hackaton.js";
 import { useOpenviduUsers } from "./src/lib/index.js";
 import { channel } from "./config.js";
@@ -123,6 +128,18 @@ const App = {
       publisher,
       subscribers,
     } = useOpenviduUsers(channel);
+
+    watch(
+      () => subscribers.value,
+      (value, prevValue) => {
+        if (value.length > prevValue.length) {
+          events.emit("play", "join");
+        }
+        if (value.length < prevValue.length) {
+          events.emit("play", "leave");
+        }
+      }
+    );
 
     const onUserDrag = debounce(({ x, y }) => {
       const outgoingMessage = createMessage({
