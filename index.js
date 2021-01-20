@@ -123,6 +123,7 @@ const App = {
     </div>
   </div>
   <Settings v-show="settingsOpened" />
+  <!--
   <div
     v-if="sessionStarted"
     @click="settingsOpened = !settingsOpened"
@@ -130,6 +131,7 @@ const App = {
   >
     <img src="files/settings.svg" style="filter: invert()"/>
   </div>
+  -->
   <Setup
     v-if="!sessionStarted"
     @start="joinSession"

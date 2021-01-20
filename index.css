@@ -89,7 +89,6 @@ select {
 
 img {
   display: block;
-  border: 1px solid red;
 }
 /* Custom components */
 
@@ -131,7 +130,7 @@ img {
 .controls-buttons {
   background: #efefef;
   border-radius: 1000px;
-  padding: 0 18px;
+  padding: 0 22px;
 }
 
 .controls-buttons button {

@@ -69,16 +69,17 @@ export default {
           autoplay
           muted
         />
-        <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center">
+        <!--
+          <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center">
           <div style="border: 3px solid white; border-radius: 1000px; width: 150px; height: 150px;" />
         </div>
+        -->
       </div>
-      <div style="display: grid; gap: 16px; grid-template-columns: auto;">
-        <label>Select camera</label>
-        <Select v-model="camera" :options="cameraOptions" />
-        <label>Select mic</label>
-        <Select v-model="mic" :options="micOptions" />
-      </div>
+      <label>Select camera</label>
+      <Select v-model="camera" :options="cameraOptions" />
+      <label>Select mic</label>
+      <Select v-model="mic" :options="micOptions" />
+      <div />
       <button class="primary" @click="onStart">Start</button>
     </div>
   </div>
