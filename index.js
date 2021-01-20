@@ -67,7 +67,8 @@ const App = {
       <OpenviduVideo
         :publisher="subscriber"
         style="
-          clipPath: circle(33%)
+          clipPath: circle(33%);
+          transform: scale(-1,1);
         "
       />
     </div>
@@ -85,7 +86,8 @@ const App = {
       <OpenviduVideo
         :publisher="publisher"
         style="
-          clipPath: circle(33%)
+          clipPath: circle(33%);
+          transform: scale(-1,1);
         "
       />
     </Draggable>

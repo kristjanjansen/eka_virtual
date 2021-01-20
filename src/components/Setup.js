@@ -61,7 +61,7 @@ export default {
           style="
             clipPath: circle(40%);
             width: 340px;
-            transform: scale(1,1);
+            transform: scale(-1,1);
           "
           ref="video"
           autoplay
