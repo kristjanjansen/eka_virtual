@@ -94,6 +94,10 @@ const App = {
       }
     });
 
+    const onThemeChange = () => {
+      // document.body.style.setProperty("background", event.value.color);
+    };
+
     return {
       sessionStarted,
       joinSession,
