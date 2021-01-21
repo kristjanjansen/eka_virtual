@@ -173,7 +173,7 @@ img {
 .video {
   overflow: hidden;
   position: relative;
-  border: 10px solid var(--border-color);
+  border: 12px solid var(--border-color);
   width: 500px;
   transform: scale(0.25);
 }
