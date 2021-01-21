@@ -71,6 +71,8 @@ const App = {
     const cameraIndex = ref(0);
     const micIndex = ref(0);
 
+    const isIntro = ref(true);
+
     const isScreenshare = ref(false);
 
     const onScreenshare = () => {
@@ -109,6 +111,7 @@ const App = {
       onScreenshare,
       isScreenshare,
       radiuses,
+      isIntro,
     };
   },
   template: `
@@ -234,14 +237,15 @@ const App = {
       />
   </div>
   <Setup
-    v-if="!sessionStarted"
+    v-if="!isIntro && !sessionStarted"
     @start="joinSession"
     v-model:camera-index="cameraIndex"
     v-model:mic-index="micIndex"
   />
   <Intro
-    v-if="true"
-    @submit=""
+    v-if="isIntro && !sessionStarted"
+    @submit="isIntro = false"
+    style="z-index: 10000"
   />
   `,
 };
