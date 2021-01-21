@@ -13,6 +13,7 @@ export default {
         "--modal-bg": "rgba(89, 89, 89,1)",
         "--bubble-bg": " rgba(255, 255, 255, 0.3)",
         "--bubble-color": " rgba(255, 255, 255, 1)",
+        "--border-color": " rgba(255, 255, 255, 1)",
       },
       yellow: {
         "--dot-bg": "rgba(255, 168, 0, 0.8)",
@@ -20,6 +21,23 @@ export default {
         "--modal-bg": "rgba(255, 168, 0, 0)",
         "--bubble-bg": "rgba(255, 168, 0, 1)",
         "--bubble-color": "rgba(255, 168, 0, 1)",
+        "--border-color": "rgba(245, 158, 0, 1)",
+      },
+      lightblue: {
+        "--dot-bg": "hsla(223, 100%, 86%, 1)",
+        "--main-bg": "hsla(223, 100%, 86%, 1)",
+        "--modal-bg": "hsla(223, 100%, 56%, 0)",
+        "--bubble-bg": "hsla(223, 100%, 76%, 1)",
+        "--bubble-color": "hsla(223, 100%, 86%, 1)",
+        "--border-color": "hsla(223, 100%, 66%, 1)",
+      },
+      darkblue: {
+        "--dot-bg": "hsla(223, 100%, 15%, 1)",
+        "--main-bg": "hsla(223, 100%, 15%, 1)",
+        "--modal-bg": "hsla(223, 100%, 25%, 0)",
+        "--bubble-bg": "hsla(223, 100%, 25%, 1)",
+        "--bubble-color": "hsla(223, 100%, 45%, 1)",
+        "--border-color": "hsla(223, 100%, 95%, 1)",
       },
     };
 
