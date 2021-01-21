@@ -6,12 +6,6 @@ export default {
     const showReactions = ref(false);
     const isScreenshare = ref(false);
 
-    //document.body.style.setProperty("main-bg", "red");
-
-    //const formatRgb = (r, g, b, a) => `rgba(${r},${g},${b},${a})`;
-
-    //const theme = ref("gray");
-
     const colors = {
       gray: {
         "--dot-bg": "rgba(36, 36, 36, 0.8)",
@@ -30,8 +24,6 @@ export default {
     };
 
     const onThemeChange = (color) => {
-      //theme.value = theme.value === "gray" ? "yellow" : "gray";
-
       Object.entries(colors[color]).forEach(([key, value]) => {
         document.body.style.setProperty(key, value);
       });
