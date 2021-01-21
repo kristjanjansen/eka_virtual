@@ -126,7 +126,7 @@ const App = {
       height: 100vh;
       z-index: -1000;
     "
-    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FBa9AzRlpIVIC2tvbvWkJPA%2FVirtual-EKA%3Fnode-id%3D0%253A1"
+    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FQGWNz5WGIU7JeeByZelrC3%2FDelivery-App_UI-Kit%3Fnode-id%3D33%253A696"
     allowfullscreen
   />
   <!--div
