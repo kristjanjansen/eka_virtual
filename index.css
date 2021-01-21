@@ -1,9 +1,5 @@
 :root {
-  --main-bg: rgba(255, 168, 0, 0.2);
-  --modal-bg: rgba(255, 168, 0);
-  --bubble-bg: rgba(255, 168, 0, 1);
-  --bubble-color: rgba(255, 168, 0, 1);
-
+  --foo: #336699;
   --main-bg: #242424;
   --modal-bg: #595959;
   --bubble-bg: rgba(255, 255, 255, 0.3);
@@ -17,6 +13,7 @@
   --font-family: "Libre Franklin", sans-serif;
   --accent-color: #ff6854;
 }
+
 * {
   box-sizing: border-box;
 }
