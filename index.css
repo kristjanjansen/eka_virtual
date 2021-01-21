@@ -39,7 +39,7 @@ button {
   border: none;
   border-radius: var(--button-radius);
   background: var(--button-bg);
-  font-size: var(--font-size);
+  font-size: calc(var(--font-size) * 1.2);
   font-weight: 500;
   font-family: var(--font-family);
 }

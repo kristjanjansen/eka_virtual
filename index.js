@@ -71,6 +71,8 @@ const App = {
     const cameraIndex = ref(0);
     const micIndex = ref(0);
 
+    const isIntro = ref(true);
+
     const isScreenshare = ref(false);
 
     const onScreenshare = () => {
@@ -109,6 +111,7 @@ const App = {
       onScreenshare,
       isScreenshare,
       radiuses,
+      isIntro,
     };
   },
   template: `
@@ -126,7 +129,9 @@ const App = {
       height: 100vh;
       z-index: -1000;
     "
-    width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FQGWNz5WGIU7JeeByZelrC3%2FDelivery-App_UI-Kit%3Fnode-id%3D33%253A444" allowfullscreen
+    width="800"
+    height="450"
+    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FQGWNz5WGIU7JeeByZelrC3%2FDelivery-App_UI-Kit%3Fnode-id%3D33%253A444" allowfullscreen
   />
   <!--div
     v-show="!isScreenshare"
@@ -232,10 +237,15 @@ const App = {
       />
   </div>
   <Setup
-    v-if="!sessionStarted"
+    v-if="!isIntro && !sessionStarted"
     @start="joinSession"
     v-model:camera-index="cameraIndex"
     v-model:mic-index="micIndex"
+  />
+  <Intro
+    v-if="isIntro && !sessionStarted"
+    @submit="isIntro = false"
+    style="z-index: 10000"
   />
   `,
 };
