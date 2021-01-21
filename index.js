@@ -116,7 +116,7 @@ const App = {
     v-show="isScreenshare"
     style="
       display: block;      
-      border: none; 
+      border: none;
       position: fixed;
       top: 0;
       right: 0;
@@ -126,8 +126,7 @@ const App = {
       height: 100vh;
       z-index: -1000;
     "
-    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FQGWNz5WGIU7JeeByZelrC3%2FDelivery-App_UI-Kit%3Fnode-id%3D33%253A696"
-    allowfullscreen
+    width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FQGWNz5WGIU7JeeByZelrC3%2FDelivery-App_UI-Kit%3Fnode-id%3D33%253A444" allowfullscreen
   />
   <!--div
     v-show="!isScreenshare"
