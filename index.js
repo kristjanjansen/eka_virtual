@@ -1,4 +1,4 @@
-import { createApp, ref, watch } from "./src/deps/vue.js";
+import { createApp, ref, watch, onMounted } from "./src/deps/vue.js";
 import {
   OpenviduVideo,
   createMessage,
@@ -93,10 +93,6 @@ const App = {
         isScreenshare.value = !isScreenshare.value;
       }
     });
-
-    const onThemeChange = () => {
-      // document.body.style.setProperty("background", event.value.color);
-    };
 
     return {
       sessionStarted,
@@ -209,7 +205,20 @@ const App = {
         />
       </div>
     </Draggable>
-    <div style="
+  </div>
+  <Settings v-show="settingsOpened" />
+  <!--
+  <div
+    v-if="sessionStarted"
+    @click="settingsOpened = !settingsOpened"
+    style="position: fixed; bottom: 32px; right: 28px;"
+  >
+    <img src="files/settings.svg" style="filter: invert()"/>
+  </div>
+  -->
+  <div
+    v-show="sessionStarted"
+    style="
       position: fixed;
       right: 0;
       bottom: 32px;
@@ -222,18 +231,7 @@ const App = {
         @leaveSession="leaveSession"
         @toggleScreenshare="onScreenshare"
       />
-    </div>
   </div>
-  <Settings v-show="settingsOpened" />
-  <!--
-  <div
-    v-if="sessionStarted"
-    @click="settingsOpened = !settingsOpened"
-    style="position: fixed; bottom: 32px; right: 28px;"
-  >
-    <img src="files/settings.svg" style="filter: invert()"/>
-  </div>
-  -->
   <Setup
     v-if="!sessionStarted"
     @start="joinSession"
