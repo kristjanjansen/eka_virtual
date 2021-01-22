@@ -1,3 +1,7 @@
-### About
+### EKA Virtual
 
-Code example for integrating [elektron.live](http://elektron.live/) functionality into [VueJS 3.x](https://v3.vuejs.org/) application.
+Demo: https://eka-virtual.netlify.app/
+
+The project was implemented by [Estonian Academy of Arts] digital product design students in Jan 2021 during the workshop "Remote collaboration in virtual environments".
+
+The project shares some code with the arttech startup http://elektron.live
