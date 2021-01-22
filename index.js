@@ -220,22 +220,6 @@ const App = {
     <img src="files/settings.svg" style="filter: invert()"/>
   </div>
   -->
-  <div
-    v-show="sessionStarted"
-    style="
-      position: fixed;
-      right: 0;
-      bottom: 32px;
-      left: 0;
-      display: flex;
-      justify-content: center;
-    "
-    >
-      <Controls
-        @leaveSession="leaveSession"
-        @toggleScreenshare="onScreenshare"
-      />
-  </div>
   <Setup
     v-if="!isIntro && !sessionStarted"
     @start="joinSession"
@@ -245,8 +229,25 @@ const App = {
   <Intro
     v-if="isIntro && !sessionStarted"
     @submit="isIntro = false"
-    style="z-index: 10000"
+    style="z-index: 1000"
   />
+  <div
+    v-show="sessionStarted"
+    style="
+      position: fixed;
+      right: 0;
+      bottom: 32px;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      z-index: 1001;
+    "
+    >
+      <Controls
+        @leaveSession="leaveSession"
+        @toggleScreenshare="onScreenshare"
+      />
+  </div>
   `,
 };
 
