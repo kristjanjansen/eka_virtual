@@ -22,6 +22,7 @@ body {
   padding: 16px;
   font-family: var(--font-family);
   background: var(--main-bg);
+  transition: all 300ms ease-in-out;
 }
 
 h1,
@@ -136,12 +137,13 @@ img {
 .controls-buttons {
   background: #efefef;
   border-radius: 1000px;
-  padding: 0 22px;
+  padding: 0 26px;
 }
 
 .controls-buttons button {
   background: none;
   border-radius: 0;
+  margin: 0 0 -4px 0;
 }
 .controls-buttons button:hover {
   background: #eee;
@@ -187,4 +189,8 @@ img {
   height: 500px;
   transform: scale(-1.1, 1.1);
   display: block;
+}
+
+.video video {
+  left: -16.6%;
 }
