@@ -8,36 +8,51 @@ export default {
 
     const colors = {
       gray: {
-        "--dot-bg": "rgba(36, 36, 36, 0.8)",
-        "--main-bg": "rgba(36, 36, 36,1)",
-        "--modal-bg": "rgba(89, 89, 89,1)",
-        "--bubble-bg": " rgba(255, 255, 255, 0.3)",
-        "--bubble-color": " rgba(255, 255, 255, 1)",
-        "--border-color": " rgba(255, 255, 255, 1)",
+        "--dot-bg": "hsla(0, 0%, 14%, 0.75)",
+        "--main-bg": "hsla(0, 0%, 14% ,1)",
+        "--modal-bg": "hsla(0, 0%, 24%, 1)",
+        "--bubble-bg": "hsla(0, 0%, 100%, 0.3)",
+        "--bubble-color": "hsla(0, 0%, 50%, 1)",
+        "--border-color": "hsla(0, 0%, 100%, 0.5)",
+        "--accent-color": "hsla(7, 100%, 66%, 1)",
+        "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
       },
-      yellow: {
-        "--dot-bg": "rgba(255, 168, 0, 0.8)",
-        "--main-bg": "rgba(255, 168, 0, 0.2)",
-        "--modal-bg": "rgba(255, 168, 0, 0)",
-        "--bubble-bg": "rgba(255, 168, 0, 1)",
-        "--bubble-color": "rgba(255, 168, 0, 1)",
-        "--border-color": "rgba(245, 158, 0, 1)",
+      green: {
+        "--dot-bg": "hsla(160, 100%, 40%, 1)",
+        "--main-bg": "hsla(160, 100%, 40%, 1)",
+        "--modal-bg": "hsla(160, 100%, 30%, 1)",
+        "--bubble-bg": "hsla(160, 70%, 30%, 1)",
+        "--bubble-color": "hsla(160, 70%, 25%, 1)",
+        "--border-color": "hsla(160, 100%, 15%, 0.5)",
+        "--accent-color": "hsla(0, 0%, 30%, 0.8)",
+        "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
       },
-      lightblue: {
-        "--dot-bg": "hsla(223, 100%, 86%, 1)",
-        "--main-bg": "hsla(223, 100%, 86%, 1)",
-        "--modal-bg": "hsla(223, 100%, 56%, 0)",
-        "--bubble-bg": "hsla(223, 100%, 76%, 1)",
-        "--bubble-color": "hsla(223, 100%, 86%, 1)",
-        "--border-color": "hsla(223, 100%, 66%, 1)",
+      red: {
+        "--dot-bg": "hsla(0, 100%, 65%, 1)",
+        "--main-bg": "hsla(0, 100%, 15%, 1)",
+        "--modal-bg": "hsla(0, 100%, 20%, 1)",
+        "--bubble-bg": "hsla(0, 100%, 25%, 1)",
+        "--bubble-color": "hsla(0, 100%, 50%, 1)",
+        "--accent-color": "hsla(52, 98%, 48%, 1)",
+        "--accent-inverse-color": "hsla(0, 0%, 0%, 0.8)",
       },
-      darkblue: {
-        "--dot-bg": "hsla(223, 100%, 15%, 1)",
-        "--main-bg": "hsla(223, 100%, 15%, 1)",
-        "--modal-bg": "hsla(223, 100%, 25%, 0)",
-        "--bubble-bg": "hsla(223, 100%, 25%, 1)",
-        "--bubble-color": "hsla(223, 100%, 45%, 1)",
-        "--border-color": "hsla(223, 100%, 95%, 1)",
+      blue: {
+        "--dot-bg": "hsla(220, 100%, 35%, 1)",
+        "--main-bg": "hsla(220, 100%, 15%, 1)",
+        "--modal-bg": "hsla(220, 100%, 25%, 1)",
+        "--bubble-bg": "hsla(220, 100%, 30%, 1)",
+        "--bubble-color": "hsla(220, 100%, 50%, 1)",
+        "--accent-color": "hsla(7, 100%, 66%, 1)",
+        "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
+      },
+      purple: {
+        "--dot-bg": "hsla(280, 100%, 30%, 1)",
+        "--main-bg": "hsla(280, 100%, 10%, 1)",
+        "--modal-bg": "hsla(280, 100%, 20%, 1)",
+        "--bubble-bg": "hsla(280, 80%, 40%, 1)",
+        "--bubble-color": "hsla(280, 80%, 80%, 1)",
+        "--accent-color": "hsla(7, 100%, 66%, 1)",
+        "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
       },
     };
 
@@ -75,7 +90,7 @@ export default {
       <button
         v-for="values, color in colors"
         :style="{color: values['--dot-bg']}"
-        style="transform: translateY(-5px);"
+        style="transform: translateY(-7px);"
         @click="() => onThemeChange(color)"
       >⬤</button>
       

@@ -29,11 +29,16 @@ export default {
     const micOptions = ref([]);
     const video = ref(null);
 
+    const mediaLoaded = ref(false);
+
     navigator.mediaDevices
       .getUserMedia({ audio: true, video: true })
       .then((stream) => {
         video.value.srcObject = stream;
-        video.value.onloadedmetadata = () => video.value.play();
+        video.value.onloadedmetadata = () => {
+          video.value.play();
+          mediaLoaded.value = true;
+        };
 
         navigator.mediaDevices.enumerateDevices().then((dev) => {
           cameraOptions.value = Object.fromEntries(
@@ -52,11 +57,20 @@ export default {
 
     const onStart = () => emit("start");
 
-    return { video, camera, cameraOptions, mic, micOptions, onStart, radiuses };
+    return {
+      video,
+      camera,
+      cameraOptions,
+      mic,
+      micOptions,
+      onStart,
+      radiuses,
+      mediaLoaded,
+    };
   },
   template: `
   <div class="overlay">
-    <div class="modal" style="display: grid; gap: 16px;">
+    <div class="modal" style="max-width: 400px; display: grid; gap: 16px;">
       <div style="position: relative; display: flex; justify-content: center;">
         <div
           style="
@@ -65,7 +79,10 @@ export default {
             border: 3px solid white;
             width: 200px;
           "
-          :style="{borderRadius: radiuses[0]}"
+          :style="{
+            borderRadius: radiuses[0],
+            opacity: mediaLoaded ? 1 : 0
+          }"
         >
           <video
             style="
