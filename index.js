@@ -244,7 +244,7 @@ const App = {
     "
     >
       <Controls
-        @leaveSession="leaveSession"
+        @leaveSession="() => { leaveSession(); isIntro = true; }"
         @toggleScreenshare="onScreenshare"
       />
   </div>

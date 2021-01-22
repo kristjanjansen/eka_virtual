@@ -70,7 +70,7 @@ export default {
   },
   template: `
   <div class="overlay">
-    <div class="modal" style="display: grid; gap: 16px;">
+    <div class="modal" style="max-width: 400px; display: grid; gap: 16px;">
       <div style="position: relative; display: flex; justify-content: center;">
         <div
           style="
