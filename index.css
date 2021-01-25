@@ -1,11 +1,10 @@
 :root {
-  --dot-bg: hsla(0, 0%, 14%, 0.75);
-  --main-bg: hsla(0, 0%, 14%, 1);
-  --modal-bg: hsla(0, 0%, 24%, 1);
-  --bubble-bg: hsla(0, 13%, 51%, 0.3);
-  --bubble-color: hsla(0, 0%, 100%, 1);
-  --border-color: hsla(0, 0%, 100%, 0.5);
-  --accent-color: hsla(7, 100%, 66%);
+  --dot-bg: hsla(280, 100%, 30%, 1);
+  --main-bg: hsla(280, 100%, 10%, 1);
+  --modal-bg: hsla(280, 100%, 20%, 1);
+  --bubble-bg: hsla(280, 80%, 40%, 1);
+  --bubble-color: hsla(280, 80%, 80%, 1);
+  --accent-color: hsla(7, 100%, 66%, 1);
   --accent-inverse-color: hsla(0, 0%, 100%, 0.8);
 
   --border-radius: 10px;
@@ -180,7 +179,7 @@ img {
 .video {
   overflow: hidden;
   position: relative;
-  border: 12px solid var(--border-color);
+  border: 12px solid white;
   width: 500px;
   transform: scale(0.25);
 }

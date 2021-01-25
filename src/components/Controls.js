@@ -7,6 +7,15 @@ export default {
     const isScreenshare = ref(false);
 
     const colors = {
+      purple: {
+        "--dot-bg": "hsla(280, 100%, 30%, 1)",
+        "--main-bg": "hsla(280, 100%, 10%, 1)",
+        "--modal-bg": "hsla(280, 100%, 20%, 1)",
+        "--bubble-bg": "hsla(280, 80%, 40%, 1)",
+        "--bubble-color": "hsla(280, 80%, 80%, 1)",
+        "--accent-color": "hsla(7, 100%, 66%, 1)",
+        "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
+      },
       gray: {
         "--dot-bg": "hsla(0, 0%, 14%, 0.75)",
         "--main-bg": "hsla(0, 0%, 14% ,1)",
@@ -42,15 +51,6 @@ export default {
         "--modal-bg": "hsla(220, 100%, 25%, 1)",
         "--bubble-bg": "hsla(220, 100%, 30%, 1)",
         "--bubble-color": "hsla(220, 100%, 50%, 1)",
-        "--accent-color": "hsla(7, 100%, 66%, 1)",
-        "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
-      },
-      purple: {
-        "--dot-bg": "hsla(280, 100%, 30%, 1)",
-        "--main-bg": "hsla(280, 100%, 10%, 1)",
-        "--modal-bg": "hsla(280, 100%, 20%, 1)",
-        "--bubble-bg": "hsla(280, 80%, 40%, 1)",
-        "--bubble-color": "hsla(280, 80%, 80%, 1)",
         "--accent-color": "hsla(7, 100%, 66%, 1)",
         "--accent-inverse-color": "hsla(0, 0%, 100%, 0.8)",
       },
