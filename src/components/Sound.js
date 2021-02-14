@@ -1,5 +1,7 @@
 import { ref } from "../deps/vue.js";
-import { events } from "../deps/live.js";
+import { events, createMessage, safeJsonParse } from "../deps/live.js";
+import { socket } from "../deps/hackaton.js";
+import { channel } from "../../config.js";
 
 export default {
   props: {
@@ -19,6 +21,19 @@ export default {
     const audioRef = ref(null);
     const muted = ref(true);
 
+    socket.addEventListener("message", ({ data }) => {
+      const message = safeJsonParse(data);
+      if (
+        message &&
+        message.type === "EMOTION" &&
+        message.channel === channel &&
+        message.value === props.name
+      ) {
+        muted.value = false;
+        audioRef.value.play();
+      }
+    });
+
     events.on("pause", (name) => {
       if (name === props.name) {
         muted.value = true;
@@ -28,8 +43,12 @@ export default {
 
     events.on("play", (name) => {
       if (name === props.name) {
-        muted.value = false;
-        audioRef.value.play();
+        const outgoingMessage = createMessage({
+          type: "EMOTION",
+          channel,
+          value: name,
+        });
+        socket.send(outgoingMessage);
       }
     });
 
